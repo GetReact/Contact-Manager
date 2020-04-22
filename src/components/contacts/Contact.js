@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Consumer } from '../context'
+import axios from 'axios'
 export default class Contact extends Component {
     state = {
         showContactInfo: false
     };
     onShowClick = e => { this.setState({ showContactInfo: !this.state.showContactInfo }) }
     onDeleteClick = (id, dispatch) => {
-        dispatch({ type: 'DELETE_CONTACT', payload: id })
-        this.setState({ name: '', email: '', phone: '' })
+        axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+            .then(res => dispatch({ type: 'DELETE_CONTACT', payload: id }))
     }
     render() {
         const { showContactInfo } = this.state
